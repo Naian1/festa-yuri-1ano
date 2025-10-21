@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festa do Yuri - 1º Aniversário</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #FF6B35;
+            --secondary: #4ECDC4;
+            --accent: #FFD166;
+            --dark: #2A2D34;
+            --light: #F7F9FC;
+            --sparkle: #FF27A8;
+            --gold: #FFD700;
+            --rainbow: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD, #98D8C8);
+        }
+
+        body {
+            font-family: 'Baloo 2', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--dark);
+        }
+
+        /* Audio Player - NOVO DESIGN */
+        .audio-player {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .audio-player:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .audio-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+        }
+
+        /* Confete Melhorado */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            opacity: 0;
+            animation: confettiEpic 6s infinite;
+            border-radius: 3px;
+        }
+
+        .confetti:nth-child(5n) { background: var(--primary); animation-delay: 0.5s; }
+        .confetti:nth-child(5n+1) { background: var(--secondary); animation-delay: 1s; }
+        .confetti:nth-child(5n+2) { background: var(--sparkle); animation-delay: 1.5s; }
+        .confetti:nth-child(5n+3) { background: var(--gold); animation-delay: 2s; }
+
+        @keyframes confettiEpic {
+            0% {
+                transform: translateY(-100px) translateX(0) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(0) translateX(20px) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh) translateX(100px) rotate(720deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkles Melhorados */
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkleTwinkle 4s infinite;
+            box-shadow: 0 0 10px 2px rgba(255,255,255,0.8);
+        }
+
+        @keyframes sparkleTwinkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            25% { opacity: 1; transform: scale(1.5) rotate(90deg); }
+            50% { opacity: 0.8; transform: scale(1) rotate(180deg); }
+            75% { opacity: 1; transform: scale(1.2) rotate(270deg); }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, 
+                rgba(102, 126, 234, 0.95) 0%, 
+                rgba(118, 75, 162, 0.95) 100%);
+        }
+
+        /* Nuvens Animadas */
+        .clouds-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 100px;
+            filter: blur(20px);
+            animation: cloudFloat 80s infinite linear;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+        }
+
+        .cloud:nth-child(1) { 
+            width: 250px; height: 80px; top: 15%; left: -250px; 
+            animation-delay: 0s; 
+        }
+        .cloud:nth-child(2) { 
+            width: 180px; height: 60px; top: 65%; right: -180px; 
+            animation-delay: 20s; 
+        }
+        .cloud:nth-child(3) { 
+            width: 300px; height: 100px; top: 40%; left: -300px; 
+            animation-delay: 40s; 
+        }
+
+        @keyframes cloudFloat {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
+        }
+
+        /* Bolofofos - ANIMAÇÃO COMPLETAMENTE REFEITA */
+        .bolofofos-master {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .bolofofo-character {
+            position: absolute;
+            width: 140px;
+            height: auto;
+            object-fit: contain;
+            opacity: 1;
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.4));
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: bolofofoOrbit 25s infinite linear;
+        }
+
+        /* Animações individuais para cada bolofofo */
+        .bolofofo-1 { 
+            width: 160px; 
+            animation: bolofofoOrbit 30s infinite linear, bolofofoFloat1 8s ease-in-out infinite;
+        }
+        .bolofofo-2 { 
+            width: 120px; 
+            animation: bolofofoOrbit 25s infinite linear reverse, bolofofoFloat2 6s ease-in-out infinite 1s;
+        }
+        .bolofofo-3 { 
+            width: 180px; 
+            animation: bolofofoOrbit 35s infinite linear, bolofofoFloat3 10s ease-in-out infinite 2s;
+        }
+        .bolofofo-4 { 
+            width: 100px; 
+            animation: bolofofoOrbit 20s infinite linear reverse, bolofofoFloat4 7s ease-in-out infinite 3s;
+        }
+        .bolofofo-5 { 
+            width: 150px; 
+            animation: bolofofoOrbit 28s infinite linear, bolofofoFloat5 9s ease-in-out infinite 4s;
+        }
+
+        /* Órbita principal */
+        @keyframes bolofofoOrbit {
+            0% {
+                transform: rotate(0deg) translateX(250px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(250px) rotate(-360deg);
+            }
+        }
+
+        /* Flutuações individuais */
+        @keyframes bolofofoFloat1 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-80px) rotate(10deg) scale(1.1); }
+        }
+
+        @keyframes bolofofoFloat2 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-60px) rotate(-8deg) scale(1.15); }
+        }
+
+        @keyframes bolofofoFloat3 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(12deg) scale(1.05); }
+        }
+
+        @keyframes bolofofoFloat4 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(-15deg) scale(1.2); }
+        }
+
+        @keyframes bolofofoFloat5 {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-70px) rotate(5deg) scale(1.12); }
+        }
+
+        /* Posições orbitais */
+        .bolofofo-1 { top: 20%; left: calc(50% - 80px); }
+        .bolofofo-2 { top: 30%; left: calc(50% + 100px); }
+        .bolofofo-3 { top: 60%; left: calc(50% - 120px); }
+        .bolofofo-4 { top: 70%; left: calc(50% + 60px); }
+        .bolofofo-5 { top: 45%; left: calc(50% - 150px); }
+
+        /* Efeito de transparência ao rolar */
+        .bolofofo-character.scrolled {
+            opacity: 0.2;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2)) blur(2px);
+            transform: scale(0.8);
+        }
+
+        /* Conteúdo Principal */
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 10;
+            position: relative;
+            padding: 20px;
+        }
+
+        .hero-entrance {
+            animation: heroMasterEntrance 1.5s ease-out forwards;
+        }
+
+        @keyframes heroMasterEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8) rotate(-5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        /* Age Badge - COMPLETAMENTE REFEITO */
+        .age-badge {
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            color: white;
+            padding: 25px 50px;
+            border-radius: 70px;
+            font-size: 2.8em;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 40px;
+            animation: badgeFloat 4s ease-in-out infinite, badgePulse 2s ease-in-out infinite, badgeRainbow 8s linear infinite;
+            box-shadow: 
+                0 20px 40px rgba(255, 107, 53, 0.5),
+                0 0 0 4px rgba(255, 255, 255, 0.3),
+                0 0 0 8px rgba(255, 209, 102, 0.2),
+                inset 0 2px 10px rgba(255,255,255,0.4);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .age-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: badgeShine 3s ease-in-out infinite;
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(1deg); }
+            75% { transform: translateY(-5px) rotate(-1deg); }
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes badgeRainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes badgeShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .hero h1 {
+            font-size: 5em;
+            margin-bottom: 30px;
+            text-shadow: 
+                3px 3px 0px rgba(0,0,0,0.2),
+                0 0 20px rgba(255,255,255,0.5);
+            color: white;
+            letter-spacing: 3px;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 3px 3px 0px rgba(0,0,0,0.2), 0 0 20px rgba(255,255,255,0.5); }
+            100% { text-shadow: 3px 3px 0px rgba(0,0,0,0.2), 0 0 30px rgba(255,255,255,0.8), 0 0 40px rgba(255,209,102,0.6); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.8em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.6;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+            font-weight: 500;
+            animation: subtitleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes subtitleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .date-highlight {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            padding: 20px 40px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.5em;
+            font-weight: 700;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            animation: datePulse 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .date-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: dateShine 2s ease-in-out infinite;
+        }
+
+        @keyframes datePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes dateShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: indicatorBounce 2s infinite, indicatorGlow 2s ease-in-out infinite alternate;
+            color: white;
+            font-size: 2.5em;
+            z-index: 10;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .scroll-indicator:hover {
+            transform: translateX(-50%) scale(1.2);
+            color: var(--accent);
+            background: rgba(255,255,255,0.3);
+            box-shadow: 0 0 30px rgba(255,209,102,0.5);
+        }
+
+        @keyframes indicatorBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        @keyframes indicatorGlow {
+            0% { box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+            100% { box-shadow: 0 0 20px rgba(255,255,255,0.6), 0 0 30px rgba(255,209,102,0.4); }
+        }
+
+        /* Seções */
+        .section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section-dark {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1c23 100%);
+            color: white;
+        }
+
+        .section-light {
+            background: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 60px;
+            position: relative;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            animation: titleLine 3s ease-in-out infinite;
+        }
+
+        @keyframes titleLine {
+            0%, 100% { width: 100px; }
+            50% { width: 150px; }
+        }
+
+        /* Form Section - CORRIGIDO */
+        .form-section {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            margin: 0 auto;
+            max-width: 650px;
+            position: relative;
+            z-index: 20;
+            animation: formEntrance 1s ease-out;
+        }
+
+        @keyframes formEntrance {
+            0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .form-title {
+            color: white;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+            animation: formTitleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes formTitleGlow {
+            0% { text-shadow: 2px 2px 0px rgba(0,0,0,0.2); }
+            100% { text-shadow: 2px 2px 0px rgba(0,0,0,0.2), 0 0 20px rgba(255,209,102,0.5); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.1em;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: 'Baloo 2', cursive;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* CORREÇÃO DO SELECT - AGORA VISÍVEL */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 20px;
+            padding-right: 50px;
+        }
+
+        select option {
+            background: var(--dark);
+            color: white;
+            padding: 15px;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            transform: translateY(-5px);
+            box-shadow: 
+                0 10px 25px rgba(255, 209, 102, 0.3),
+                inset 0 2px 10px rgba(255,255,255,0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.3),
+                0 0 0 2px rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.4),
+                0 0 0 3px rgba(255,255,255,0.3);
+            background: linear-gradient(135deg, var(--secondary), var(--primary), var(--accent));
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .party-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .info-card i {
+            font-size: 3em;
+            color: var(--accent);
+            margin-bottom: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .info-card:hover i {
+            transform: scale(1.3) rotate(15deg);
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(255,209,102,0.5);
+        }
+
+        .info-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--dark) 0%, #15171e 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            animation: footerGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes footerGlow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 380px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-info:hover {
+            transform: translateY(-5px);
+            border-left-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3em; }
+            .age-badge { font-size: 2em; padding: 20px 35px; }
+            .hero-subtitle { font-size: 1.4em; }
+            .bolofofo-character { width: 100px; }
+            .audio-player { top: 15px; right: 15px; padding: 10px 15px; }
+            .section { padding: 70px 15px; }
+            .section-title { font-size: 2.2em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <button class="audio-btn" id="play-btn">
+            <i class="fas fa-play"></i>
+        </button>
+        <button class="audio-btn" id="pause-btn">
+            <i class="fas fa-pause"></i>
+        </button>
+        <button class="audio-btn" id="volume-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <!-- Efeitos Mínimos -->
+    <div class="confetti-container" id="confetti-container"></div>
+    <div class="sparkles" id="sparkles-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <!-- Nuvens Animadas -->
+        <div class="clouds-container">
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+        </div>
+
+        <!-- Bolofofos - ANIMAÇÃO COMPLETAMENTE NOVA -->
+        <div class="bolofofos-master" id="bolofofos-master">
+            <img src="imagens/bolofofos/bolofofo-polvo.png" alt="Bolofofo Polvo" class="bolofofo-character bolofofo-1">
+            <img src="imagens/bolofofos/bolofofo-coelho.png" alt="Bolofofo Coelho" class="bolofofo-character bolofofo-2">
+            <img src="imagens/bolofofos/bolofofo-gatinho.png" alt="Bolofofo Gatinho" class="bolofofo-character bolofofo-3">
+            <img src="imagens/bolofofos/bolofofo-coruja.png" alt="Bolofofo Coruja" class="bolofofo-character bolofofo-4">
+            <img src="imagens/bolofofos/bolofofos-leao.png" alt="Bolofofo Leão" class="bolofofo-character bolofofo-5">
+        </div>
+
+        <div class="hero-content hero-entrance">
+            <div class="age-badge">1º ANIVERSÁRIO</div>
+            <h1>YURI</h1>
+            <p class="hero-subtitle">Uma celebração mágica no mundo encantado dos Bolofofos</p>
+            <div class="date-highlight">
+                31 de Outubro de 2025
+            </div>
+        </div>
+        <div class="scroll-indicator" onclick="scrollToForm()">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Formulário Section -->
+    <section class="section section-dark fade-in" id="form-section">
+        <div class="container">
+            <div class="form-section">
+                <h2 class="form-title">Confirme Sua Presença</h2>
+                <form action="https://formsubmit.co/mufreenl1@gmail.com" method="POST">
+                    <div class="form-group">
+                        <label for="name">Nome da Família ou Convidado</label>
+                        <input type="text" id="name" name="name" required placeholder="Digite seu nome ou da família">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="accept">Vai aceitar esta missão divertida?</label>
+                        <select id="accept" name="accept" required>
+                            <option value="">Escolha sua resposta</option>
+                            <option value="sim">Sim, com certeza! 🎉</option>
+                            <option value="nao">Infelizmente não poderei 😢</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kids_count">Quantas crianças?</label>
+                        <input type="number" id="kids_count" name="kids_count" min="0" max="10" placeholder="Número de crianças">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kids_info">Nome e Idade das Crianças</label>
+                        <textarea id="kids_info" name="kids_info" rows="3" placeholder="Ex: Maria - 3 anos, João - 5 anos"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adults_count">Quantos adultos?</label>
+                        <input type="number" id="adults_count" name="adults_count" min="0" max="10" placeholder="Número de adultos">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Celular para Contato</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Mensagem para o Yuri</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Deixe um recadinho carinhoso..."></textarea>
+                    </div>
+
+                    <input type="hidden" name="_subject" value="🎪 Confirmação - Festa do Yuri">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Confirmar Presença
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Informações Section -->
+    <section class="section section-light fade-in">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--dark);">Informações da Festa</h2>
+            <div class="party-info">
+                <div class="info-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Data</h3>
+                    <p>31 de Outubro de 2025</p>
+                    <p><strong>Confirme até: 25/10</strong></p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Horário</h3>
+                    <p>às 18:00</p>
+                    <p>Traga muita alegria!</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Local</h3>
+                    <p>Rua dos Bolofofos, 123</p>
+                    <p>Vai ser mágico!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h2 style="margin-bottom: 30px; color: var(--accent);">Celebre Conosco!</h2>
+            <div class="contact-info">
+                <p><i class="fas fa-phone"></i> <strong>Dúvidas?</strong></p>
+                <p>Celular: (11) 99225-2016</p>
+                <p><small>Celebrando com amor entre familiares e amigos próximos</small></p>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.8;">© 2025 Festa do Yuri - 1º Aniversário</p>
+        </div>
+    </footer>
+
+    <!-- Áudio de Fundo -->
+    <audio id="bg-music" loop>
+        <source src="musica/festa-infantil.mp3" type="audio/mpeg">
+        <source src="musica/festa-infantil.ogg" type="audio/ogg">
+        Seu navegador não suporta áudio HTML5.
+    </audio>
+
+    <script>
+        // Controle de Áudio
+        const bgMusic = document.getElementById('bg-music');
+        const playBtn = document.getElementById('play-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const volumeBtn = document.getElementById('volume-btn');
+        
+        let isMuted = false;
+        
+        // Configurações iniciais do áudio
+        bgMusic.volume = 0.3;
+        bgMusic.preload = "auto";
+        
+        playBtn.addEventListener('click', () => {
+            bgMusic.play().catch(error => {
+                console.log('Erro ao reproduzir áudio:', error);
+                alert('Clique em qualquer lugar da página primeiro para habilitar o áudio!');
+            });
+            playBtn.style.display = 'none';
+            pauseBtn.style.display = 'flex';
+        });
+        
+        pauseBtn.addEventListener('click', () => {
+            bgMusic.pause();
+            playBtn.style.display = 'flex';
+            pauseBtn.style.display = 'none';
+        });
+        
+        volumeBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            bgMusic.muted = isMuted;
+            volumeBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            volumeBtn.style.background = isMuted ? 'rgba(255, 0, 0, 0.3)' : 'linear-gradient(135deg, var(--primary), var(--accent))';
+        });
+
+        // Inicialmente mostrar apenas o botão de play
+        pauseBtn.style.display = 'none';
+
+        // Efeitos Mínimos
+        function createMinimalEffects() {
+            const confettiContainer = document.getElementById('confetti-container');
+            const sparklesContainer = document.getElementById('sparkles-container');
+            
+            // Mais confetes
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 8 + 's';
+                confettiContainer.appendChild(confetti);
+            }
+            
+            // Mais sparkles
+            for (let i = 0; i < 15; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.animationDelay = Math.random() * 6 + 's';
+                sparklesContainer.appendChild(sparkle);
+            }
+        }
+
+        // Controle de opacidade dos Bolofofos - MELHORADO
+        function handleBolofofoParallax() {
+            const bolofofos = document.querySelectorAll('.bolofofo-character');
+            const scrollY = window.scrollY;
+            const heroHeight = document.getElementById('hero').offsetHeight;
+            const formSection = document.getElementById('form-section');
+            const formRect = formSection.getBoundingClientRect();
+            
+            // Verificar se o formulário está visível
+            const formIsVisible = formRect.top < window.innerHeight && formRect.bottom > 0;
+            
+            bolofofos.forEach((bolofofo) => {
+                if (scrollY < heroHeight) {
+                    // No hero section - opacidade normal
+                    const progress = Math.min(scrollY / heroHeight, 1);
+                    bolofofo.style.opacity = 1 - (progress * 0.8);
+                    bolofofo.classList.remove('scrolled');
+                } else {
+                    // Fora do hero section
+                    if (formIsVisible) {
+                        // Sobre o formulário - aplicar transparência
+                        const formProgress = Math.min(
+                            (window.innerHeight - formRect.top) / window.innerHeight,
+                            1
+                        );
+                        bolofofo.style.opacity = 0.1 + (0.1 * formProgress);
+                        bolofofo.classList.add('scrolled');
+                    } else {
+                        // Fora do formulário - opacidade baixa
+                        bolofofo.style.opacity = 0.3;
+                        bolofofo.classList.add('scrolled');
+                    }
+                }
+            });
+        }
+
+        // Scroll suave para o formulário
+        function scrollToForm() {
+            document.getElementById('form-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Scroll Animations
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Máscara de Telefone
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.substring(0, 11);
+            
+            if (value.length > 0) {
+                value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                if (value.length > 10) {
+                    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                }
+            }
+            e.target.value = value;
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            createMinimalEffects();
+            handleScrollAnimations();
+            
+            // Interação do usuário para habilitar áudio
+            document.body.addEventListener('click', function() {
+                bgMusic.play().then(() => {
+                    bgMusic.pause();
+                }).catch(error => {
+                    console.log('Áudio precisa de interação do usuário');
+                });
+            }, { once: true });
+        });
+
+        window.addEventListener('scroll', function() {
+            handleBolofofoParallax();
+            handleScrollAnimations();
+        });
+
+        // Fallback para imagens dos bolofofos
+        document.querySelectorAll('.bolofofo-character').forEach(img => {
+            img.addEventListener('error', function() {
+                console.log('Erro ao carregar imagem:', this.src);
+                this.style.background = 'linear-gradient(135deg, #FF6B35, #4ECDC4, #FFD166)';
+                this.style.display = 'flex';
+                this.style.alignItems = 'center';
+                this.style.justifyContent = 'center';
+                this.style.color = 'white';
+                this.style.fontSize = '2em';
+                this.innerHTML = '🎈';
+                this.alt = 'Imagem não carregada';
+            });
+            
+            img.addEventListener('load', function() {
+                console.log('Imagem carregada com sucesso:', this.src);
+            });
+        });
+    </script>
+</body>
+</html>
